@@ -12,7 +12,15 @@ const Header = () => {
         // Check if user data exists in local storage on component mount
         const storedUser = localStorage.getItem('user');
         if (storedUser) {
-            setUser(JSON.parse(storedUser));
+            try {
+                const parsedUser = JSON.parse(storedUser);
+                if (parsedUser && Object.keys(parsedUser).length > 0) {
+                    setUser(parsedUser);
+                }
+            } catch (error) {
+                console.error('Error parsing user data from localStorage:', error);
+                localStorage.removeItem('user');
+            }
         }
     }, []);
 
@@ -25,10 +33,17 @@ const Header = () => {
     };
 
     const handleLogout = () => {
+        console.log('Logging out...');
         // Remove user data from local storage
         localStorage.removeItem('user');
-        setUser(null);
+        // Use a callback to ensure we're working with the most up-to-date state
+        setUser((prevUser) => {
+            console.log('User before logout:', prevUser);
+            console.log('User after logout: null');
+            return null;
+        });
     };
+
 
     return (
         <>

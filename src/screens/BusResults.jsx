@@ -4,6 +4,9 @@ import styled from "styled-components";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import Header from "../components/Header";
+import axios from 'axios'; // Import axios
+
+
 
 // Styled components (unchanged)
 
@@ -192,7 +195,9 @@ const BusResults = () => {
   const location = useLocation();
   const [from, setFrom] = useState(location.state?.from || "");
   const [to, setTo] = useState(location.state?.to || "");
-  const [departureDate, setDepartureDate] = useState(location.state?.departureDate ? new Date(location.state.departureDate) : null);
+  const [departureDate, setDepartureDate] = useState(
+    location.state?.departureDate ? new Date(location.state.departureDate) : null
+  );
   const [travellers, setTravellers] = useState(location.state?.travellers || 1);
   const [busOperatorFilter, setBusOperatorFilter] = useState("All");
   const [priceRange, setPriceRange] = useState(2000);
@@ -283,6 +288,54 @@ const BusResults = () => {
     }
     return date;
   };
+
+  const handleBooking = async (bus) => {
+    console.log("Booking function called for bus:", bus);
+    
+    const storedUser = localStorage.getItem('user');
+    console.log("Stored user data:", storedUser);
+    
+    const user = storedUser ? JSON.parse(storedUser) : null;
+    console.log("Parsed user data:", user);
+    
+    const bookingDetails = {
+      operatorName: bus.operator,
+      placeOfDeparture: bus.from,
+      placeOfArrival: bus.to,
+      DateOfDeparture: bus.date instanceof Date ? bus.date.toLocaleDateString() : bus.date,
+      timing: bus.timing,
+      userEmail: user ? user.email : 'Guest',
+      userName: user ? user.displayName : 'Guest',
+      ticketID: Math.floor(Math.random() * 1000000),
+    };
+  
+    console.log("Booking details:", bookingDetails);
+  
+    try {
+      console.log("Sending POST request to API");
+      const response = await axios.post("http://localhost:3000/api/send-emailsignup", bookingDetails, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+  
+      console.log("API Response:", response);
+      console.log("Booking successful:", response.data);
+      alert("Booking successful! Check your email for confirmation.");
+    } catch (error) {
+      console.error("Error during booking:", error);
+      if (error.response) {
+        console.error("Error response:", error.response.data);
+        console.error("Error status:", error.response.status);
+      } else if (error.request) {
+        console.error("No response received:", error.request);
+      } else {
+        console.error("Error message:", error.message);
+      }
+      alert("An error occurred during booking. Please try again.");
+    }
+  };
+
 
   return (
     <>
@@ -419,31 +472,43 @@ const BusResults = () => {
         </FiltersContainer>
 
         <BusGrid>
-          {filteredBuses.length > 0 ? (
-            filteredBuses.map(bus => (
-              <BusCard key={bus.id}>
-                <OperatorInfo>
-                  <OperatorLogo src={bus.logo} alt={bus.operator} />
-                  <BusDetails>
-                    <p><strong>{bus.operator}</strong></p>
-                    <p>{bus.from} to {bus.to}</p>
-                    <BusTiming>{bus.timing}</BusTiming>
-                    <BusDuration>Duration: {bus.duration}</BusDuration>
-                    <p>{formatDate(bus.date)}</p>
-                    <p>{bus.type}</p>
-                  </BusDetails>
-                </OperatorInfo>
-                <div style={{ textAlign: 'right' }}>
-                  <BusPrice>₹{bus.price.toFixed(2)}</BusPrice>
-                  <p>Available Seats: {bus.availableSeats}</p>
-                  <SearchButton>BOOK</SearchButton>
-                </div>
-              </BusCard>
-            ))
-          ) : (
-            <div>No buses found.</div>
-          )}
-        </BusGrid>
+            {filteredBuses.length > 0 ? (
+              filteredBuses.map(bus => (
+                <BusCard key={bus.id}>
+                  <OperatorInfo>
+                    <OperatorLogo src={bus.logo} alt={bus.operator} />
+                    <BusDetails>
+                      <p><strong>{bus.operator}</strong></p>
+                      <p>{bus.from} to {bus.to}</p>
+                      <BusTiming>{bus.timing}</BusTiming>
+                      <BusDuration>Duration: {bus.duration}</BusDuration>
+                      <p>{formatDate(bus.date)}</p>
+                      <p>{bus.type}</p>
+                    </BusDetails>
+                  </OperatorInfo>
+                  <div style={{ textAlign: 'right' }}>
+                    <BusPrice>₹{bus.price.toFixed(2)}</BusPrice>
+                    <p>Available Seats: {bus.availableSeats}</p>
+                    <SearchButton
+                        onClick={() => {
+                          const storedUser = localStorage.getItem('user');
+                          const user = storedUser ? JSON.parse(storedUser) : null;
+                          if (!user) {
+                            alert("Login to book ticket");
+                          } else {
+                            handleBooking(bus);
+                          }
+                        }}
+                      >
+                        BOOK
+                      </SearchButton>
+                  </div>
+                </BusCard>
+              ))
+            ) : (
+              <div>No buses found.</div>
+            )}
+          </BusGrid>
       </FiltersAndResultsContainer>
     </ResultsContainer>
     </MainContainer>
