@@ -231,11 +231,25 @@ const FlightResults = () => {
 
   const airlines = [
     { name: "IndiGo", logo: "https://logos-world.net/wp-content/uploads/2023/01/IndiGo-Logo.png" },
+    { name: "Air India", logo: "https://logos-world.net/wp-content/uploads/2023/01/Air-India-Logo.png" },
+    { name: "SpiceJet", logo: "https://logos-world.net/wp-content/uploads/2023/01/SpiceJet-Logo.png" },
+    { name: "Vistara", logo: "https://rb.gy/0pd3sg" },
+    { name: "GoAir", logo:"https://rb.gy/bq8fup" },
+    { name: "AirAsia India", logo: "https://shorturl.at/IXx6t" },
+    { name: "Alliance Air", logo: "https://shorturl.at/OYNi8" },
+    { name: "Akasa Air", logo: "https://shorturl.at/54Ofh" },
+    { name: "United Airlines", logo:"https://shorturl.at/qazW6"  },
+    { name: "Delta Air Lines", logo: "https://shorturl.at/2qPfn" },
+    { name: "British Airways", logo: "https://tinyurl.com/mwc7r43p"  },
+    { name: "Lufthansa", logo: "https://t.ly/RMDlB" },
+    { name: "Singapore Airlines", logo: "https://logos-world.net/wp-content/uploads/2023/01/Singapore-Airlines-Logo.png" },
+    { name: "Emirates", logo:"https://t.ly/AJO_F"  },
+    { name: "Qatar Airways", logo:"https://t.ly/bzv2z" }
+    
     
   ];
   const mealTypes = ["All", "Free Meal", "No Meal", "Vegetarian Meal", "Non-Vegetarian Meal"];
    const airlineOptions = ["All", 
-    "Cathay Pacific", 
     "Emirates", 
     "Qatar Airways",
     "Singapore Airlines", 
@@ -246,14 +260,11 @@ const FlightResults = () => {
     "GoAir", 
     "AirAsia India",
     "Alliance Air", 
-    "Star Air", 
-    "TruJet", 
-    "Air Odisha",  
-    "Air Costa", 
-    "Air Deccan", 
-    "Air India Express", 
-    "Air India Regional", 
-    "Air Pegasus"];
+    "Akasa Air",
+    "United Airlines",
+    "Delta Air Lines",
+    "British Airways",
+    "Lufthansa"];
   
   const flightOptions = [
     "Delhi", "Mumbai", "Bengaluru", "Kolkata", "Chennai", "Hyderabad",
