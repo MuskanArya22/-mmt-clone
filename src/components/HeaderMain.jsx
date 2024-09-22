@@ -38,7 +38,6 @@ const Header = () => {
                         <Heading color="white">TravelVoyage</Heading>
                     </Link>
                     <Flex align="center" spacing={6}>
-                        <SearchBar />
                         {user ? (
                             <Menu>
                                 <MenuButton as={Button} rightIcon={<ChevronDownIcon />} ml={4}>

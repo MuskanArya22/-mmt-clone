@@ -10,13 +10,13 @@ const Header = () => {
                     <Heading color="white">TravelVoyage</Heading>
                 </Link>
                 <Flex align="center" spacing={6}>
-                    <Link href="/flights" color="white" mx={4}>
+                    <Link href="/results" color="white" mx={4}>
                         Flights
                     </Link>   
-                    <Link href="/buses" color="white" mx={4}>
+                    <Link href="/bus-results" color="white" mx={4}>
                         Buses
                     </Link>
-                    <SearchBar />
+                    
                     <Button colorScheme="teal" ml={4}>
                         Login
                     </Button>
