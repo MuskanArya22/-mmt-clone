@@ -1,10 +1,20 @@
-import React, { useState } from 'react';
-import { Box, Flex, Heading, Link, Button } from '@chakra-ui/react';
+import React, { useState, useEffect } from 'react';
+import { Box, Flex, Heading, Link, Button, Menu, MenuButton, MenuList, MenuItem, Text } from '@chakra-ui/react';
+import { ChevronDownIcon } from '@chakra-ui/icons';
 import SearchBar from './SearchBar';
-import Modal from './Login'; // Import the Modal component
+import Modal from './Login';
 
 const Header = () => {
     const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
+    const [user, setUser] = useState(null);
+
+    useEffect(() => {
+        // Check if user data exists in local storage on component mount
+        const storedUser = localStorage.getItem('user');
+        if (storedUser) {
+            setUser(JSON.parse(storedUser));
+        }
+    }, []);
 
     const handleLoginClick = () => {
         setIsLoginModalOpen(true);
@@ -12,6 +22,12 @@ const Header = () => {
 
     const handleCloseLoginModal = () => {
         setIsLoginModalOpen(false);
+    };
+
+    const handleLogout = () => {
+        // Remove user data from local storage
+        localStorage.removeItem('user');
+        setUser(null);
     };
 
     return (
@@ -23,18 +39,29 @@ const Header = () => {
                     </Link>
                     <Flex align="center" spacing={6}>
                         <SearchBar />
-                        <Button
-                            bg="linear-gradient(60deg, #3b82f6, #60a5fa)"
-                            color="white"
-                            ml={4}
-                            borderRadius="10px"
-                            _hover={{
-                                bg: 'linear-gradient(60deg, #3182ce, #93c5fd)'
-                            }}
-                            onClick={handleLoginClick}
-                        >
-                            Login
-                        </Button>
+                        {user ? (
+                            <Menu>
+                                <MenuButton as={Button} rightIcon={<ChevronDownIcon />} ml={4}>
+                                    {user.displayName}
+                                </MenuButton>
+                                <MenuList>
+                                    <MenuItem onClick={handleLogout}>Logout</MenuItem>
+                                </MenuList>
+                            </Menu>
+                        ) : (
+                            <Button
+                                bg="linear-gradient(60deg, #3b82f6, #60a5fa)"
+                                color="white"
+                                ml={4}
+                                borderRadius="10px"
+                                _hover={{
+                                    bg: 'linear-gradient(60deg, #3182ce, #93c5fd)'
+                                }}
+                                onClick={handleLoginClick}
+                            >
+                                Login
+                            </Button>
+                        )}
                         <select
                             style={{
                                 backgroundColor: 'transparent',
@@ -45,9 +72,9 @@ const Header = () => {
                                 borderRadius: '4px'
                             }}
                         >
-                            <option style={{ color: 'black' }} value="en">English</option>
-                            <option style={{ color: 'black' }} value="es">Español</option>
-                            <option style={{ color: 'black' }} value="fr">Français</option>
+                            <option style={{ color: 'black' }} value="en">INR</option>
+                            <option style={{ color: 'black' }} value="es">USD</option>
+                            <option style={{ color: 'black' }} value="fr">EUR</option>
                         </select>
                     </Flex>
                 </Flex>
