@@ -34,9 +34,9 @@ const Header = () => {
 
     const handleLogout = () => {
         console.log('Logging out...');
-        // Remove user data from local storage
+        
         localStorage.removeItem('user');
-        // Use a callback to ensure we're working with the most up-to-date state
+        
         setUser((prevUser) => {
             console.log('User before logout:', prevUser);
             console.log('User after logout: null');

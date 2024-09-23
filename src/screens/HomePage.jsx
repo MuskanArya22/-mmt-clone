@@ -267,7 +267,11 @@ const HomePage = () => {
               options={popularCities}
             />
 
-            <CircleBetween>
+            <CircleBetween onClick={() => {
+              const temp = from;
+              setFrom(to);
+              setTo(temp);
+            }}>
               <Repeat size={16} />
             </CircleBetween>
 
