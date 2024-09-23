@@ -186,7 +186,7 @@ const HomePage = () => {
   const [departureDate, setDepartureDate] = useState("");
   const [returnDate, setReturnDate] = useState("");
   const [travellers, setTravellers] = useState("1 Adult");
-  const [busOperator, setBusOperator] = useState(""); // Added busOperator state
+  const [busOperator, setBusOperator] = useState(""); 
   const navigate = useNavigate();
   
   const popularCities = [
@@ -209,7 +209,7 @@ const HomePage = () => {
   const handleSearch = () => {
     const searchParams = { from, to, departureDate, travellers };
     if (transportType === "buses") {
-      searchParams.busOperator = busOperator; // Now it references the correct state
+      searchParams.busOperator = busOperator; 
     }
     navigate(transportType === "flights" ? "/results" : "/bus-results", {
       state: searchParams,
@@ -318,7 +318,7 @@ const HomePage = () => {
               <InputGroup>
                 <InputLabel>Bus Operator</InputLabel>
                 <StyledSelect
-                  value={busOperator} // Update this to use the correct state
+                  value={busOperator} 
                   onChange={(e) => setBusOperator(e.target.value)}
                 >
                   {busOperators.map((operator) => (

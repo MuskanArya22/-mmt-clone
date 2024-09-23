@@ -4,11 +4,8 @@ import styled from "styled-components";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import Header from "../components/Header";
-import axios from 'axios'; // Import axios
+import axios from 'axios'; 
 
-
-
-// Styled components (unchanged)
 
 const MainContainer = styled.div`
   background-image: linear-gradient(0deg, #15457b, #051423);

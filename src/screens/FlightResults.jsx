@@ -4,13 +4,12 @@ import styled from "styled-components";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import Header from "../components/Header";
-import axios from 'axios'; // Import axios
+import axios from 'axios'; 
 
-// Styled components
 
 const MainContainer = styled.div`
   background-image: linear-gradient(0deg, #15457b, #051423);
-  height: 40vh; // Adjust the height as needed
+  height: 40vh; 
 `;
 const ResultsContainer = styled.div`
   display: flex;
@@ -214,7 +213,6 @@ const FlightResults = () => {
   const fromDropdownRef = useRef(null);
   const toDropdownRef = useRef(null);
 
-  // Close dropdowns when clicking outside
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (
@@ -333,7 +331,7 @@ const FlightResults = () => {
     "Miami",
   ];
 
-  const flights = Array.from({ length: 20 }, (_, index) => {
+    const flights = Array.from({ length: 20 }, (_, index) => {
     const airline = airlines[Math.floor(Math.random() * airlines.length)];
     const meal = mealTypes[Math.floor(Math.random() * mealTypes.length)];
     const duration = Math.floor(Math.random() * 12) + 1;
@@ -342,7 +340,7 @@ const FlightResults = () => {
       id: index + 1,
       from,
       to,
-      date: departureDate || new Date("2024-09-22"),
+      date: departureDate || new Date("2024-09-23"),
       price: Math.random() * 5000 + 1000,
       duration: `${duration}h ${Math.floor(Math.random() * 60)}m`,
       timing: `${Math.floor(Math.random() * 24)}:${Math.floor(
